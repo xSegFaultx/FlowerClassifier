@@ -4,6 +4,13 @@ The purpose of this project is to build a neural network that can recognize diff
 
 __WARNING__:This is a project from Udacity's " [AI Programming with Python Nanodegree](https://www.udacity.com/course/ai-programming-python-nanodegree--nd089)". I hope my code can help you with your project (if you are working on the same project as this one) but please do not copy my code and please follow [Udacity Honor Code](https://www.udacity.com/legal/community-guidelines) when you are doing your project.
 
+## Project Description
+This project has 2 parts:
+1. Implement and test the classifier in Jupyter Notebook
+
+2. Convert the trained and tested classifier to a command line application
+
+
 ## File structure of the project
 Here this the file structure of this project (**only important files are listed**)
 <pre>
@@ -35,11 +42,7 @@ Description of some of the important files/directories
 |            ./func.py             |   All the helper functions for ./predict.py and ./train.py   |
 | ./Image Classifier Project.ipynb | All the code and details of the project in a jupyter notebook |
 |           ./network.py           |        A class that defines the classifier (network)         |
-|           ./predict.py           | The code that is used to doing inference on the trained network |
+|           ./predict.py           | Use a trained network to predict the class for an input image |
 |            ./test.jpg            | A randomly chosen image that is used to test the classifier  |
-|            ./train.py            |          The code that is used to train the network          |
-
-
-
-
+|            ./train.py            |     Train the network and save the model as a checkpoint     |
 
