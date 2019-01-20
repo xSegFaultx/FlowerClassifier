@@ -28,6 +28,8 @@ FlowerClassifier
 ├── assets
 ├── cat_to_name.json
 ├── checkpoint.pth
+├── checkpoints
+│   └── checkpoint.pth
 ├── flowers
 │   ├── test
 │   ├── train
@@ -45,7 +47,8 @@ Description of some of the important files/directories
 |            File name             |                         Description                          |
 | :------------------------------: | :----------------------------------------------------------: |
 |        ./cat_to_name.json        |        A mapping from category label to category name        |
-|         ./checkpoint.pth         |       A checkpoint file that saves the trained network       |
+|   ./checkpoints/checkpoint.pth   | A checkpoint file that saves the trained network (command line) |
+|         ./checkpoint.pth         | A checkpoint file that saves the trained network (notebook)  |
 |          ./flowers/test          |        This directory contains all the testing images        |
 |         ./flowers/train          |       This directory contains all the training images        |
 |         ./flowers/valid          |      This directory contains all the validation images       |
@@ -56,3 +59,17 @@ Description of some of the important files/directories
 |            ./test.jpg            | A randomly chosen image that is used to test the classifier  |
 |            ./train.py            |     Train the network and save the model as a checkpoint     |
 
+## Data Transformations
+There are two reasons why we need to perform transfermations on our data. First, images in the dataset have different shapes, however, the VGG16 network that is used later only takes 244x244 pixels images as input. Therefore, we need to reshape all the images so that we can feed them into the network later. Second, randomly perform tranformations like rotation, flip can increase the variation of samples and hence help the network generalize. Also, we need to normalize the image as VGG16 requires. (**More details of normalization can be found in the notebook**)  
+
+So here is what I did:
+  + Resize all images in training, testing and validation set to 244x244 pixels while keeping aspect ratio of the original images
+  + Randomly rotate, horizontal flip and vertial flip images in the training set (I didn't do the same to testing and validation set because these two sets will not affect the performance of the network and these two sets should represent real world data as closely as possible)
+  + Normalize all the images
+  
+## Structure of the network
+## Traning and Hyper Parameters
+I only trained the network for 2 epochs and the accuracy of the classifier 
+## Testing result
+## Inference on the network
+## Command line version
