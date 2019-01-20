@@ -60,16 +60,22 @@ Description of some of the important files/directories
 |            ./train.py            |     Train the network and save the model as a checkpoint     |
 
 ## Data Transformations
-There are two reasons why we need to perform transfermations on our data. First, images in the dataset have different shapes, however, the VGG16 network that is used later only takes 244x244 pixels images as input. Therefore, we need to reshape all the images so that we can feed them into the network later. Second, randomly perform tranformations like rotation, flip can increase the variation of samples and hence help the network generalize. Also, we need to normalize the image as VGG16 requires. (**More details of normalization can be found in the notebook**)  
+There are two reasons why we need to perform transformations on our data. First, images in the dataset have different shapes, however, the VGG16 network that is used later only takes 244x244 pixels images as input. Therefore, we need to reshape all the images so that we can feed them into the network later. Second, randomly perform transformations like rotation, flip can increase the variety of samples and hence help the network generalize. Also, we need to normalize the image as VGG16 requires. (**More details of normalization can be found in the notebook**)    
 
 So here is what I did:
   + Resize all images in training, testing and validation set to 244x244 pixels while keeping aspect ratio of the original images
-  + Randomly rotate, horizontal flip and vertial flip images in the training set (I didn't do the same to testing and validation set because these two sets will not affect the performance of the network and these two sets should represent real world data as closely as possible)
+  + Randomly rotate, horizontal flip and vertical flip images in the training set (I didn't do the same to testing and validation set because these two sets will not affect the performance of the network and these two sets should represent real-world data as closely as possible)
   + Normalize all the images
   
 ## Structure of the network
-## Traning and Hyper Parameters
-I only trained the network for 2 epochs and the accuracy of the classifier 
+## Traning
+* Loss function
+  + According to [Pytorch Documentation](https://pytorch.org/docs/stable/nn.html#nllloss), NLLLoss is useful to train a classification problem with C classes. Train a classification problem with C classes is exactly what we want to do in this project, so I choose to use NLLLoss. Also, since I used log_softmax as my activation function, using NLLLoss is same as using crossentropy loss (which is also very useful and wildly used for training a classification problem) according to [Pytorch Documentation](https://pytorch.org/docs/stable/nn.html#crossentropyloss)
+* Optimizer
+  + Adam optimizer is usually my "go-to" optimizer because it converges faster than many other optimizers (using momentum) and it can automatically adjust the learning rate for each parameter (saves me a lot of time on tuning)
+  + I choose a learning rate of 0.0012. First I chose 0.01 and found that it is too big since the accuracy bouncing around after the first epoch. So I reduce it to 0.001 and finally chose 0.0012 after some testing and fine-tuning.
+* Number of epochs
+  + I only trained the network for 2 epochs and the accuracy of the classifier has already gone over 75% which is good enough according to the rubric (70%). 
 ## Testing result
 ## Inference on the network
 ## Command line version
