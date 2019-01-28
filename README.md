@@ -4,6 +4,7 @@ The purpose of this project is to build a neural network that can recognize diff
 
 __WARNING__:This is a project from Udacity's " [AI Programming with Python Nanodegree](https://www.udacity.com/course/ai-programming-python-nanodegree--nd089)". I hope my code can help you with your project (if you are working on the same project as this one) but please do not copy my code and please follow [Udacity Honor Code](https://www.udacity.com/legal/community-guidelines) when you are doing your project.
 
+
 ## Project Description
 This project has 2 parts:
 * First, implement and test the classifier in Jupyter Notebook (**only important steps are listed below. Please take a look at the notebook file if you want to see all the steps with detailed explanations**)
@@ -17,8 +18,6 @@ This project has 2 parts:
 * Second, convert the trained and tested classifier to a command line application
   + For this part of the project, most of the code in func.py, network.py, predict.py and train.py are copied from the notebook version of the project. Because, they are pretty much the same
   + The only difference is that predict.py and train.py can take command line input from users. Therefore, users can customize their network structure, choose their own hyper parameters, etc.
-
-
 
 
 ## File structure of the project
@@ -59,14 +58,16 @@ Description of some of the important files/directories
 |            ./test.jpg            | A randomly chosen image that is used to test the classifier  |
 |            ./train.py            |     Train the network and save the model as a checkpoint     |
 
+
 ## Data Transformations
 There are two reasons why we need to perform transformations on our data. First, images in the dataset have different shapes, however, the VGG16 network that is used later only takes 244x244 pixels images as input. Therefore, we need to reshape all the images so that we can feed them into the network later. Second, randomly perform transformations like rotation, flip can increase the variety of samples and hence help the network generalize. Also, we need to normalize the image as VGG16 requires. (**More details of normalization can be found in the notebook**)    
 
 So here is what I did:
   + Resize all images in training, testing and validation set to 244x244 pixels while keeping aspect ratio of the original images
   + Randomly rotate, horizontal flip and vertical flip images in the training set (I didn't do the same to testing and validation set because these two sets will not affect the performance of the network and these two sets should represent real-world data as closely as possible)
-  + Normalize all the images
-  
+  + Normalize all the images as VGG16 requires
+
+
 ## Structure of the network
 ## Traning
 * Loss function
@@ -75,7 +76,35 @@ So here is what I did:
   + Adam optimizer is usually my "go-to" optimizer because it converges faster than many other optimizers (using momentum) and it can automatically adjust the learning rate for each parameter (saves me a lot of time on tuning)
   + I choose a learning rate of 0.0012. First I chose 0.01 and found that it is too big since the accuracy bouncing around after the first epoch. So I reduce it to 0.001 and finally chose 0.0012 after some testing and fine-tuning.
 * Number of epochs
-  + I only trained the network for 2 epochs and the accuracy of the classifier has already gone over 75% which is good enough according to the rubric (70%). 
+  + I only trained the network for 2 epochs and the accuracy of the classifier has already gone over 75% which is good enough according to the rubric (70%).
+
+
 ## Testing result
+Testing set is a data set that the classifier has never seen before. Testing our trained classifier on testing data set can give us a good estimate of the performance of the classifier on real-world data. The testing accuracy of my classifier is about 75% which is pretty good according to the rubric (70%).
+
+
+## Save and Load the Checkpoint
+We can save our trained network and load it later for inference so that we don't need to re-train the network from scratch every time we need to inference on the network.
+* Saving
+  + We need to save the state of the trained network (values of all the parameters), so we don't need to train it again later
+  + We need to save the structure information of the network (input size, hidden size, output size), so we can re-build the network later
+  + Other necessary information for inferencing. For example, the mapping between real labels and one-hot encoded labels.
+  + Lastly, we want to save all these into a checkpoint file
+* Loading
+  + Load the checkpoint file
+  + Re-build the classifier by using the structure information we saved before
+  + Load the state of the model back to the classifier we just create
+
+
 ## Inference on the network
+Before feeding the image to the network, we need to do some preparations.
+* Frist, since users can input any sizes of images and VGG16 only accepts one input shape, we need to process user input images so that we can feed it into our network. (Basically the same thing we did on testing and validation set)
+  + Resize all images in training, testing and validation set to 244x244 pixels while keeping aspect ratio of the original images
+  + Normalize all the images as VGG16 requires
+* Second, we need to put the network into inference mode
+  + Put the network to evaluation mode so that layers like dropout, batchnorm (we didn't use in this project), etc. will not affect the result of inference
+  + Turn auto-grad off since we will not perform back propagation during inference. This can reduce memory usage and reduce a lot of computations.
+
+After all these preparations, we can finally do inference on the network. For this project, we will show top k probable classes as our result
+
 ## Command line version
