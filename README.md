@@ -10,7 +10,7 @@ This project has 2 parts:
 * First, implement and test the classifier in Jupyter Notebook (**only important steps are listed below. Please take a look at the notebook file if you want to see all the steps with detailed explanations**)
   + Load all the training, testing and validation data
   + Apply tranformations on all the data to make sure each image has the same size. Also apply extra transformations on training data (like rotation and flip) which can help the network generalize
-  + Build the classifier. Here I used a pretrained VGG16 to extra all the features from an image and three dense layers to "map" these features to the label
+  + Build the classifier. Here I used a pretrained VGG16 to extract all the features from an image and three dense layers to "map" these features to the label
   + Train the network
   + Save the trained model in a checkpoint file for later inference
   + Perform inference on the trained network
@@ -69,6 +69,17 @@ So here is what I did:
 
 
 ## Structure of the network
+For this project, we will build our network using transfer learning (I haven't learned CNN at this point). I used a pre-trained VGG16 network as my feature extractor and 3 dense layers as the classifier that maps features to labels.
+* VGG16
+  + Since the VGG16 is pre-trained, we don't want to change the parameters in VGG16 during backpropagation. Therefore, we need to freeze the VGG16 network
+* Classifier
+  + Look at the structure of VGG16, the last convolutional block has output 25088 (from the max pooling layer). Therefore, the input layer size should be the same.
+  + We have 102 different classes in total. Therefore, the output layer size should be 102.
+  + For the hidden layer, I only used 1 layer of dense network with size 512. I started with 2 layers with size 8192 and 512 and soon found out that the training took a lot of time. Therefore, I deleted the layer with size 8192 to speed up the training. As a result, the training is faster and the final accuracy is slightly better. (I think this is because of reducing overfitting)
+  + For the dropout rate I chose to use 0.2 after testing various rate from 0.1 to 0.5.
+
+
+
 ## Traning
 * Loss function
   + According to [Pytorch Documentation](https://pytorch.org/docs/stable/nn.html#nllloss), NLLLoss is useful to train a classification problem with C classes. Train a classification problem with C classes is exactly what we want to do in this project, so I choose to use NLLLoss. Also, since I used log_softmax as my activation function, using NLLLoss is same as using crossentropy loss (which is also very useful and wildly used for training a classification problem) according to [Pytorch Documentation](https://pytorch.org/docs/stable/nn.html#crossentropyloss)
@@ -103,8 +114,9 @@ Before feeding the image to the network, we need to do some preparations.
   + Normalize all the images as VGG16 requires
 * Second, we need to put the network into inference mode
   + Put the network to evaluation mode so that layers like dropout, batchnorm (we didn't use in this project), etc. will not affect the result of inference
-  + Turn auto-grad off since we will not perform back propagation during inference. This can reduce memory usage and reduce a lot of computations.
+  + Turn auto-grad off since we will not perform backpropagation during inference. This can reduce memory usage and reduce a lot of computations.
 
 After all these preparations, we can finally do inference on the network. For this project, we will show top k probable classes as our result
+
 
 ## Command line version
