@@ -121,6 +121,7 @@ After all these preparations, we can finally do inference on the network. For th
 
 ## Command line version
 The command line version is pretty much the same as the notebook version. The only difference is that the command line version allows users to customize their network structure, choose their own hyperparameters, etc.  
+
 To build and train the network:
 * Run: `python train.py data_directory` data_directory is where the training, testing and validation datasets are located. Below are all the optional inputs.
   + `--save_dir` The directory you want to save the checkpoint file, default directory is checkpoints (type: String)
@@ -129,4 +130,5 @@ To build and train the network:
   + `--hidden_units` The number of inputs of the hidden layer in the classifier, default is 512 (type: int)
   + `--epochs` Number of epochs, default is 3 (type: int)
   + `--gpu` Turn on gpu training, default is OFF (type: boolean)
+
 To perform inference on the trained network:
