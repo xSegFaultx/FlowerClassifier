@@ -123,7 +123,7 @@ After all these preparations, we can finally do inference on the network. For th
 The command line version is pretty much the same as the notebook version. The only difference is that the command line version allows users to customize their network structure, choose their own hyperparameters, etc.  
 
 To build and train the network:
-* Run: `python train.py data_directory` data_directory is where the training, testing and validation datasets are located. Below are all the optional inputs.
+* Run: `python train.py data_directory` "data_directory" is where the training, testing and validation datasets are located. Below are all the optional inputs.
   + `--save_dir` The directory you want to save the checkpoint file, default directory is checkpoints (type: String)
   + `--arch` Choose one of the pre-trained network. You can choose from vgg11, vgg13, vgg16, vgg19, densenet121, densenet161, densenet169, densenet201, default is vgg16 (type: string)
   + `--learning_rate` The learning rate of the neural network, default is 0.0012 (type: float)
@@ -132,3 +132,7 @@ To build and train the network:
   + `--gpu` Turn on gpu training, default is OFF (type: boolean)
 
 To perform inference on the trained network:
+* Run: `python predict.py /path/to/image checkpoint` "/path/to/image" is the path to the image that you want the network to classify and "checkpoint" is the path to the checkpoint file (.pth file). Below are all the optional inputs.
+  + `--top_k` Show the top k possible class with their possibility, default is 1 (type: string)
+  + `--category_names` A json file that contains a dictionary that can convert class indexes to category names, default is None (type: string)
+  + `--gpu` Turn on gpu predicting, default is OFF (type: boolean)
