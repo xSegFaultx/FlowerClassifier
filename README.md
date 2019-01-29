@@ -4,7 +4,18 @@ The purpose of this project is to build a neural network that can recognize diff
 
 __WARNING__:This is a project from Udacity's " [AI Programming with Python Nanodegree](https://www.udacity.com/course/ai-programming-python-nanodegree--nd089)". I hope my code can help you with your project (if you are working on the same project as this one) but please do not copy my code and please follow [Udacity Honor Code](https://www.udacity.com/legal/community-guidelines) when you are doing your project.
 
-[Test](#structure-of-the-network)
+
+## List of Contents
+[Project Description](#project-description)  
+[File Structure](#file-structure)  
+[Data Transformations](#data-transformations)  
+[Structure of the Network](#structure-of-the-network)  
+[Training](#training)  
+[Testing Result](#testing-result)  
+[Save and Load the Checkpoint](#save-and-load-the-checkpoint)  
+[Inference on the Network](#inference-on-the-network)  
+[Command Line Version](#command-line-version)  
+
 
 ## Project Description
 This project has 2 parts:
@@ -21,7 +32,7 @@ This project has 2 parts:
   + The only difference is that predict.py and train.py can take command line input from users. Therefore, users can customize their network structure, choose their own hyper parameters, etc.
 
 
-## File structure of the project
+## File Structure
 Here this the file structure of this project (**only important files are listed**)
 <pre>
 FlowerClassifier
@@ -69,7 +80,7 @@ So here is what I did:
   + Normalize all the images as VGG16 requires
 
 
-## Structure of the network
+## Structure of the Network
 For this project, we will build our network using transfer learning (I haven't learned CNN at this point). I used a pre-trained VGG16 network as my feature extractor and 3 dense layers as the classifier that maps features to labels.
 * VGG16
   + Since the VGG16 is pre-trained, we don't want to change the parameters in VGG16 during backpropagation. Therefore, we need to freeze the VGG16 network
@@ -81,7 +92,7 @@ For this project, we will build our network using transfer learning (I haven't l
 
 
 
-## Traning
+## Training
 * Loss function
   + According to [Pytorch Documentation](https://pytorch.org/docs/stable/nn.html#nllloss), NLLLoss is useful to train a classification problem with C classes. Train a classification problem with C classes is exactly what we want to do in this project, so I choose to use NLLLoss. Also, since I used log_softmax as my activation function, using NLLLoss is same as using crossentropy loss (which is also very useful and wildly used for training a classification problem) according to [Pytorch Documentation](https://pytorch.org/docs/stable/nn.html#crossentropyloss)
 * Optimizer
@@ -91,7 +102,7 @@ For this project, we will build our network using transfer learning (I haven't l
   + I only trained the network for 2 epochs and the accuracy of the classifier has already gone over 75% which is good enough according to the rubric (70%).
 
 
-## Testing result
+## Testing Result
 Testing set is a data set that the classifier has never seen before. Testing our trained classifier on testing data set can give us a good estimate of the performance of the classifier on real-world data. The testing accuracy of my classifier is about 75% which is pretty good according to the rubric (70%).
 
 
@@ -108,7 +119,7 @@ We can save our trained network and load it later for inference so that we don't
   + Load the state of the model back to the classifier we just create
 
 
-## Inference on the network
+## Inference on the Network
 Before feeding the image to the network, we need to do some preparations.
 * Frist, since users can input any sizes of images and VGG16 only accepts one input shape, we need to process user input images so that we can feed it into our network. (Basically the same thing we did on testing and validation set)
   + Resize all images in training, testing and validation set to 244x244 pixels while keeping aspect ratio of the original images
@@ -120,7 +131,7 @@ Before feeding the image to the network, we need to do some preparations.
 After all these preparations, we can finally do inference on the network. For this project, we will show top k probable classes as our result
 
 
-## Command line version
+## Command Line Version
 The command line version is pretty much the same as the notebook version. The only difference is that the command line version allows users to customize their network structure, choose their own hyperparameters, etc.  
 
 To build and train the network:
