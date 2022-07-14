@@ -71,7 +71,7 @@ Before feeding the image to the network, we need to do some preparations.
 After all these preparations, we can finally do inference on the network. For this project, we will show top k probable classes as our result.
 Fig 1.0 below shows some of the predictions made by the model.
 <figure>
-<img src="https://github.com/xSegFaultx/Image-Captioning/raw/master/images/decoder.png" alt="Model Prediction">
+<img src="https://github.com/xSegFaultx/FlowerClassifier/raw/master/assets/fig1.0.png" alt="Model Prediction">
 <figcaption align = "center"><b>Fig.1.0 - Model Prediction </b></figcaption>
 </figure>
 
