@@ -8,15 +8,15 @@ The purpose of this project is to train a neural network that can recognize diff
 This project has 2 parts:
 * First, implement and test the classifier in Jupyter Notebook (**only important steps are listed below. Please take a look at the notebook file if you want to see all the steps with detailed explanations**)
   + Load all the training, testing and validation data
-  + Apply tranformations on all the data to make sure each image has the same size. Also perform data augmentation on training data (like rotation and flip) which can help the network generalize
+  + Apply transformations on all the data to make sure each image has the same size. Also perform data augmentation on training data (like rotation and flip) which can help the network generalize
   + Build the classifier. Here I used a pretrained VGG16 as the feature extractor and three fully connected layers to "map" these features to the label
   + Train the network
   + Save the trained model in a checkpoint file for later inference
   + Perform inference on the trained network
 
 * Second, convert the trained and tested classifier to a command line application
-  + For this part of the project, most of the code in func.py, network.py, predict.py and train.py are copied from the notebook version of the project. Because, they are pretty much the same
-  + The only difference is that predict.py and train.py can take command line input from users. Therefore, users can customize their network structure, choose their own hyper parameters, etc.
+  + For this part of the project, most of the codes in func.py, network.py, predict.py and train.py are copied from the notebook version of the project, because they are pretty much the same.
+  + The only difference is that predict.py and train.py can take command line input from users. Therefore, users can customize their network structure, choose their own hyper-parameters, etc.
 
 
 ## Data Transformations
@@ -35,15 +35,15 @@ For this project, we will build our network using transfer learning. I used a pr
 * Classifier
   + Look at the structure of VGG16, the last convolutional block has output 25088. Therefore, the input layer size should be the same.
   + We have 102 different classes in total. Therefore, the output layer size should be 102.
-  + For the hidden layer, I only used 1 layer of dense network with size 512. I started with 2 layers with size 8192 and 512 and soon found out that the training took a lot of time. Therefore, I deleted the layer with size 8192 to speed up the training. As a result, the training is faster and the final accuracy is slightly better. (I think this is because of reducing overfitting)
+  + For the hidden layer, I only used 1 layer of dense network with size 512. I started with 2 layers with size 8192 and 512 and soon found out that the training took a lot of time. Therefore, I deleted the layer with size 8192 to speed up the training. As a result, the training was faster and the final accuracy was slightly better. (I think this is because of reducing overfitting)
   + For the dropout rate I chose to use 0.2 after testing various rate from 0.1 to 0.5.
 
   
 ## Result
 I only trained the network for 2 epochs and the accuracy of the classifier has already gone over 75% which is good enough according to the rubric (70%).
-Next, I test my model on the testing dataset.
+Next, I tested my model on the testing dataset.
 Testing set is a data set that the classifier has never seen before. 
-Testing our trained classifier on testing data set can give us a good estimate of the performance of the classifier on real-world data. The testing accuracy of my classifier is about 75% which is pretty good according to the rubric (70%).
+Testing our trained classifier on testing data set can give us a good estimate of the performance of the classifier on real-world data. The testing accuracy of my classifier is about 75% which exceeds the criteria set by the rubric (70%).
 
 
 ## Save and Load the Checkpoint
@@ -61,7 +61,7 @@ We can save our trained network and load it later for inference so that we don't
 
 ## Inference on the Network
 Before feeding the image to the network, we need to do some preparations.
-* Frist, since users can input any sizes of images and VGG16 only accepts one input shape, we need to process user input images so that we can feed it into our network. (Basically the same thing we did on testing and validation set)
+* First, since users can input any sizes of images and VGG16 only accepts one input shape, we need to process user input images so that we can feed it into our network. (Basically the same thing we did on testing and validation set)
   + Resize all images in training, testing and validation set to 244x244 pixels while keeping aspect ratio of the original images
   + Normalize all the images as VGG16 requires
 * Second, we need to put the network into inference mode
@@ -81,18 +81,18 @@ The command line version is pretty much the same as the notebook version. The on
 
 To build and train the network:
 * Run: `python train.py data_directory` "data_directory" is where the training, testing and validation datasets are located. Below are all the optional inputs.
-  + `--save_dir` The directory you want to save the checkpoint file, default directory is checkpoints (type: String)
-  + `--arch` Choose one of the pre-trained network. You can choose from vgg11, vgg13, vgg16, vgg19, densenet121, densenet161, densenet169, densenet201, default is vgg16 (type: string)
-  + `--learning_rate` The learning rate of the neural network, default is 0.0012 (type: float)
-  + `--hidden_units` The number of inputs of the hidden layer in the classifier, default is 512 (type: int)
-  + `--epochs` Number of epochs, default is 3 (type: int)
-  + `--gpu` Turn on gpu training, default is OFF (type: boolean)
+  + `--save_dir` The directory you want to save the checkpoint file. The default directory is checkpoints (type: String)
+  + `--arch` Choose one of the pre-trained network. You can choose from vgg11, vgg13, vgg16, vgg19, densenet121, densenet161, densenet169, and densenet201. The default is vgg16 (type: string)
+  + `--learning_rate` The learning rate of the neural network. The default is 0.0012 (type: float)
+  + `--hidden_units` The number of inputs of the hidden layer in the classifier. The default is 512 (type: int)
+  + `--epochs` Number of epochs. The default is 3 (type: int)
+  + `--gpu` Turn on gpu training. The default is OFF (type: boolean)
 
 To perform inference on the trained network:
 * Run: `python predict.py /path/to/image checkpoint` "/path/to/image" is the path to the image that you want the network to classify and "checkpoint" is the path to the checkpoint file (.pth file). Below are all the optional inputs.
-  + `--top_k` Show the top k possible class with their possibility, default is 1 (type: string)
-  + `--category_names` A json file that contains a dictionary that can convert class indexes to category names, default is None (type: string)
-  + `--gpu` Turn on gpu predicting, default is OFF (type: boolean)
+  + `--top_k` Show the top k possible classes with their possibility. The default is 1 (type: string)
+  + `--category_names` A json file that contains a dictionary that can convert class indexes to category names. The default is None (type: string)
+  + `--gpu` Turn on gpu predicting. The default is OFF (type: boolean)
 
 # WARNING
 This is a project from Udacity's ["AI Programming with Python Nanodegree"](https://www.udacity.com/course/ai-programming-python-nanodegree--nd089). 
